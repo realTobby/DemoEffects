@@ -10,6 +10,8 @@ namespace DemoEffects
 {
     class Program
     {
+        static float sinu = 8.0f;
+
         static void Main(string[] args)
         {
             Init();
@@ -24,13 +26,31 @@ namespace DemoEffects
             while (app.IsOpen)
             {
                 app.DispatchEvents();
-                app.Clear(Color.Blue);
+                app.Clear(Color.White);
+
+                int h = 255;
+                int w = 255;
+                
+                for (int y = 0; y < h; y++)
+                {
+                    for (int x = 0; x < w; x++)
+                    {
+                        int color = Convert.ToInt32((128.0 + (128.0 * Math.Sin((x+y) / sinu))));
+                        RectangleShape pixelShape = new RectangleShape(new SFML.System.Vector2f(1, 1));
+
+                        byte[] values = BitConverter.GetBytes(color);
+                        if (!BitConverter.IsLittleEndian) Array.Reverse(values);
+
+                        pixelShape.FillColor = new Color(values[2], values[1], values[0]);
+                        pixelShape.Position = new SFML.System.Vector2f(x, y);
+                        app.Draw(pixelShape);
+                    }
+                }
+
+                sinu++;
 
 
-                // effect code here
-
-
-
+                
 
                 // Update the window
                 app.Display();

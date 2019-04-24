@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DemoEffects
 {
-    class PlasmaEffect
+    public class PlasmaEffect
     {
+
     }
 }
