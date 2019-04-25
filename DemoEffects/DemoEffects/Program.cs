@@ -58,7 +58,7 @@ namespace DemoEffects
                             break;
                     }
                 }
-                
+                someVal = 0;
                 currentEffect.DoEffect();
 
                 effectTexture.Update(currentEffect.GetCurrentFrame());
