@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using DemoEffects.Effects;
+using SFML.Graphics;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace DemoEffects
 {
     class Program
     {
-        static float sinu = 8.0f;
+        static IEffect currentEffect = new LineEffect(false);
 
         static void Main(string[] args)
         {
@@ -20,38 +21,28 @@ namespace DemoEffects
 
         public static void Init()
         {
-            RenderWindow app = new RenderWindow(new VideoMode(800, 600), "Demo Effects");
+            RenderWindow app = new RenderWindow(new VideoMode(255, 255), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
+
+            currentEffect = new ChessEffect(255,255);
 
             while (app.IsOpen)
             {
                 app.DispatchEvents();
-                app.Clear(Color.White);
+                app.Clear(Color.Black);
 
-                int h = 255;
-                int w = 255;
-                
-                for (int y = 0; y < h; y++)
+                currentEffect.DoEffect();
+                var pixels = currentEffect.GetPixels();
+
+                foreach(var pixel in pixels)
                 {
-                    for (int x = 0; x < w; x++)
-                    {
-                        int color = Convert.ToInt32((128.0 + (128.0 * Math.Sin((x+y) / sinu))));
-                        RectangleShape pixelShape = new RectangleShape(new SFML.System.Vector2f(1, 1));
-
-                        byte[] values = BitConverter.GetBytes(color);
-                        if (!BitConverter.IsLittleEndian) Array.Reverse(values);
-
-                        pixelShape.FillColor = new Color(values[2], values[1], values[0]);
-                        pixelShape.Position = new SFML.System.Vector2f(x, y);
-                        app.Draw(pixelShape);
-                    }
+                    byte[] values = BitConverter.GetBytes(pixel.color);
+                    if (!BitConverter.IsLittleEndian) Array.Reverse(values);
+                    RectangleShape newPixel = new RectangleShape(new SFML.System.Vector2f(1, 1));
+                    newPixel.FillColor = new Color(values[2], values[1], values[0]);
+                    newPixel.Position = new SFML.System.Vector2f(pixel.positionX, pixel.positionY);
+                    app.Draw(newPixel);
                 }
-
-                sinu++;
-
-
-                
-
                 // Update the window
                 app.Display();
             }

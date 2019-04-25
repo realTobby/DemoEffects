@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoEffects.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace DemoEffects
 {
-    public class PlasmaEffect
+    interface IEffect
     {
+        void DoEffect();
+        List<PixelPoint> GetPixels();
 
     }
 }
