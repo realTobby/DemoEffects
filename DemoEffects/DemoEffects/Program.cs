@@ -2,10 +2,6 @@
 using SFML.Graphics;
 using SFML.Window;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DemoEffects
 {
@@ -30,18 +26,12 @@ namespace DemoEffects
             app.Closed += new EventHandler(OnClose);
 
             currentEffect = new PlasmaEffect();
-
-            
-
-            Texture texture = new Texture(WINDOW_WIDTH, WINDOW_HEIGHT);
-            
-
+            Texture effectTexture = new Texture(WINDOW_WIDTH, WINDOW_HEIGHT);
 
             while (app.IsOpen)
             {
                 app.DispatchEvents();
                 app.Clear(Color.Red);
-
 
                 int someVal = random.Next(0, 100);
                 if(someVal == 73)
@@ -69,19 +59,12 @@ namespace DemoEffects
                     }
                 }
                 
-
-
-
-                
-
-
                 currentEffect.DoEffect();
 
-                texture.Update(currentEffect.GetCurrentFrame());
+                effectTexture.Update(currentEffect.GetCurrentFrame());
 
-                Sprite test = new Sprite(texture);
-                app.Draw(test);
-
+                Sprite effectScreen = new Sprite(effectTexture);
+                app.Draw(effectScreen);
 
                 // Update the window
                 app.Display();
