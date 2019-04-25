@@ -25,7 +25,7 @@ namespace DemoEffects
             RenderWindow app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
-            currentEffect = new PlasmaEffect();
+            currentEffect = new LineEffect(true);
             Texture effectTexture = new Texture(WINDOW_WIDTH, WINDOW_HEIGHT);
 
             while (app.IsOpen)
@@ -33,7 +33,7 @@ namespace DemoEffects
                 app.DispatchEvents();
                 app.Clear(Color.Red);
 
-                int someVal = 0;// random.Next(0, 100);
+                int someVal =  random.Next(0, 100);
                 if(someVal == 73)
                 {
                     Console.WriteLine(currentIndex);

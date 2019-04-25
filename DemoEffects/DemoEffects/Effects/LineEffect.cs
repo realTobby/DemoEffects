@@ -10,7 +10,7 @@ namespace DemoEffects.Effects
 
         int w = 255;
         int h = 255;
-
+        bool isForward = true;
         public LineEffect(bool sloped)
         {
             isSloped = sloped;
@@ -39,10 +39,22 @@ namespace DemoEffects.Effects
                 }
             }
 
-            sineThreshhold += 0.5f;
-            if(sineThreshhold >= 8.0f)
+            if (isForward == true)
             {
-                sineThreshhold = 0.5f;
+                sineThreshhold += 0.05f;
+            }
+            else
+            {
+                sineThreshhold -= 0.05f;
+            }
+
+            if (sineThreshhold >= 16.0f)
+            {
+                isForward = false;
+            }
+            if (sineThreshhold <= -16.0f)
+            {
+                isForward = true;
             }
 
         }
