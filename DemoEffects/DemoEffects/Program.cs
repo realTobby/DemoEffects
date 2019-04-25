@@ -24,27 +24,31 @@ namespace DemoEffects
             RenderWindow app = new RenderWindow(new VideoMode(255, 255), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
-            currentEffect = new ChessEffect(255,255);
+            currentEffect = new CircleEffect(255,255);
+
+            
+
+            Texture texture = new Texture(255, 255);
+            
+
 
             while (app.IsOpen)
             {
                 app.DispatchEvents();
-                app.Clear(Color.Black);
+                app.Clear(Color.Red);
+
 
                 currentEffect.DoEffect();
-                var pixels = currentEffect.GetPixels();
 
-                foreach(var pixel in pixels)
-                {
-                    byte[] values = BitConverter.GetBytes(pixel.color);
-                    if (!BitConverter.IsLittleEndian) Array.Reverse(values);
-                    RectangleShape newPixel = new RectangleShape(new SFML.System.Vector2f(1, 1));
-                    newPixel.FillColor = new Color(values[2], values[1], values[0]);
-                    newPixel.Position = new SFML.System.Vector2f(pixel.positionX, pixel.positionY);
-                    app.Draw(newPixel);
-                }
+                texture.Update(currentEffect.GetPixels());
+
+                Sprite test = new Sprite(texture);
+                app.Draw(test);
+
+
                 // Update the window
                 app.Display();
+                
             }
         }
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DemoEffects.Models;
+using SFML.Graphics;
 
 namespace DemoEffects.Effects
 {
@@ -41,9 +39,15 @@ namespace DemoEffects.Effects
             }
         }
 
-        public List<PixelPoint> GetPixels()
+        public Image GetPixels()
         {
-            return pixels;
+            Image resultImage = new Image(255, 255);
+            foreach (var pixel in pixels)
+            {
+                resultImage.SetPixel((uint)pixel.positionX, (uint)pixel.positionY, pixel.GetColor());
+            }
+
+            return resultImage;
         }
     }
 }

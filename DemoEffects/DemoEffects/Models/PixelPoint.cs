@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,13 @@ namespace DemoEffects.Models
             positionX = x;
             positionY = y;
             this.color = color;
+        }
+
+        public Color GetColor()
+        {
+            byte[] values = BitConverter.GetBytes(this.color);
+            if (!BitConverter.IsLittleEndian) Array.Reverse(values);          
+            return new Color(values[2], values[1], values[0]);
         }
 
     }

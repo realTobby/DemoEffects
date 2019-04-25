@@ -1,4 +1,5 @@
 ﻿using DemoEffects.Models;
+using SFML.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DemoEffects.Effects
     {
         List<PixelPoint> pixels = new List<PixelPoint>();
         bool isSloped = false;
-        float sineThreshhold = 8.0f;
+        float sineThreshhold = 0f;
 
         int w = 0;
         int h = 0;
@@ -54,11 +55,11 @@ namespace DemoEffects.Effects
                     int color = 1;
                     if(isSloped == true)
                     {
-                        color = (int)(128.0 + (128.0 * Math.Sin((x+y) / 8.0)));
+                        color = (int)(128.0 + (128.0 * Math.Sin((x+y) / sineThreshhold)));
                     }
                     else
                     {
-                        color = (int)(128.0 + (128.0 * Math.Sin(x / 8.0)));
+                        color = (int)(128.0 + (128.0 * Math.Sin(x / sineThreshhold)));
                     }
 
 
@@ -67,20 +68,23 @@ namespace DemoEffects.Effects
                 }
             }
 
-            sineThreshhold += 1.0f;
+            sineThreshhold += 0.5f;
             if(sineThreshhold >= 8.0f)
             {
-                sineThreshhold = 5.0f;
+                sineThreshhold = 0.5f;
             }
 
         }
 
-        public List<PixelPoint> GetPixels()
+        public Image GetPixels()
         {
-            var resultPlasma = pixels;
-            pixels = new List<PixelPoint>();
+            Image resultImage = new Image(255, 255);
+            foreach(var pixel in pixels)
+            {
+                resultImage.SetPixel((uint)pixel.positionX, (uint)pixel.positionY, pixel.GetColor());
+            }
 
-            return resultPlasma;
+            return resultImage;
         }
     }
 }

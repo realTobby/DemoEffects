@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoEffects.Models;
+using SFML.Graphics;
 
 namespace DemoEffects.Effects
 {
@@ -12,6 +13,7 @@ namespace DemoEffects.Effects
         List<PixelPoint> pixels = new List<PixelPoint>();
         int w = 0;
         int h = 0;
+        float sineThreshhold = 0.5f;
 
         public CircleEffect(int w, int h)
         {
@@ -31,17 +33,28 @@ namespace DemoEffects.Effects
             {
                 for (int x = 0; x < w; x++)
                 {
-                    int color = (int)(128.0 + (128.0 * Math.Sin(Math.Sqrt((x - w / 2.0) * (x - w / 2.0) + (y - h / 2.0) * (y - h / 2.0)) / 8.0)));
+                    int color = (int)(128.0 + (128.0 * Math.Sin(Math.Sqrt((x - w / 2.0) * (x - w / 2.0) + (y - h / 2.0) * (y - h / 2.0)) / sineThreshhold)));
 
                     PixelPoint newPixel = new PixelPoint(x, y, color);
                     pixels.Add(newPixel);
                 }
             }
+            sineThreshhold += 0.5f;
+            if (sineThreshhold >= 8.0f)
+            {
+                sineThreshhold = 0.5f;
+            }
         }
 
-        public List<PixelPoint> GetPixels()
+        public Image GetPixels()
         {
-            return pixels;
+            Image resultImage = new Image(255, 255);
+            foreach (var pixel in pixels)
+            {
+                resultImage.SetPixel((uint)pixel.positionX, (uint)pixel.positionY, pixel.GetColor());
+            }
+
+            return resultImage;
         }
     }
 }
