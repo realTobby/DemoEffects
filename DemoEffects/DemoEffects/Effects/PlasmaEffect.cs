@@ -1,61 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SFML.Graphics;
+using System;
 
 namespace DemoEffects.Effects
 {
     public class PlasmaEffect : BaseEffect, IEffect
     {
-        int paletteShift;
-        int[] colorPalette = new int[256];
         int w = 255;
         int h = 255;
 
-        public PlasmaEffect()
-        {
-            for (int x = 0; x < 256; x++)
-            {
-                //use HSVtoRGB to vary the Hue of the color through the palette
-                int r;
-                int g;
-                int b;
-                Tools.HsvToRgb(x, 255, 255, out r, out g, out b);
-                colorPalette[x] = Tools.RGBtoInt(r, g ,b);
-            }
-
-            //generate the plasma once
-            for (int y = 0; y < h; y++)
-            {
-                for (int x = 0; x < w; x++)
-                {
-                    //the plasma buffer is a sum of sines
-                    int color = (int)(128.0 + (128.0 * Math.Sin(x / 16.0)) + 128.0 + (128.0 * Math.Sin(y / 16.0))) / 2;
-                    currentFrame.SetPixel((uint)x, (uint)y, GetColor(color));
-                }
-            }
-
-        }
-
-
         public void DoEffect()
         {
-            //the parameter to shift the palette varies with time
-            paletteShift = (int)(DateTime.Now.Second / 10.0);
+            int time = DateTime.Now.Millisecond / 500;
 
-            //draw every pixel again, with the shifted palette color
-            for (int y = 0; y < h; y++)
+            for(float y = 0; y < h; y++)
             {
-                for (int x = 0; x < w; x++)
-                {
-                    var currentPixel = currentFrame.GetPixel((uint)x, (uint)y);
-                    int rgb = Tools.RGBtoInt(currentPixel.R, currentPixel.G, currentPixel.B);
+                float dy = (y / h) - 0.5f;
 
-                    var color = colorPalette[(rgb + paletteShift) % 256];
-                    currentFrame.SetPixel((uint)x, (uint)y, GetColor(color));
+                for(float x = 0; x < w; x++)
+                {
+                    float dx = (y / w) - 0.5f;
+                    double v = Math.Sin(dx * 10 + time);
+                    double cx = dx + 0.5f * Math.Sin(time / 5);
+                    double cy = dy + 0.5f * Math.Cos(time / 3);
+
+                    v += Math.Sin(Math.Sqrt(50 * (cx * cx + cy * cy) + 1 + time));
+                    v += Math.Cos(Math.Sqrt(dx * dx + dy * dy) - time);
+                    double r = Math.Floor(Math.Sin(v * Math.PI) * 255);
+                    double b = Math.Floor(Math.Cos(v * Math.PI) * 255);
+
+                    var integerColor = Tools.RGBtoInt((int)r, (int)b, (int)b);
+
+                    currentFrame.SetPixel((uint)x, (uint)y, GetColor(integerColor));
+
                 }
             }
+
         }
     }
 }

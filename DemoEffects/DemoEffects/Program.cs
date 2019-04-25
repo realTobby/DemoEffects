@@ -33,7 +33,7 @@ namespace DemoEffects
                 app.DispatchEvents();
                 app.Clear(Color.Red);
 
-                int someVal = random.Next(0, 100);
+                int someVal = 0;// random.Next(0, 100);
                 if(someVal == 73)
                 {
                     Console.WriteLine(currentIndex);
