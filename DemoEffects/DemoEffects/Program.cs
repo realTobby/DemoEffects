@@ -13,6 +13,9 @@ namespace DemoEffects
     {
         static IEffect currentEffect = new LineEffect(false);
 
+        static uint WINDOW_WIDTH = 255;
+        static uint WINDOW_HEIGHT = 255;
+
         static void Main(string[] args)
         {
             Init();
@@ -21,14 +24,14 @@ namespace DemoEffects
 
         public static void Init()
         {
-            RenderWindow app = new RenderWindow(new VideoMode(255, 255), "Demo Effects");
+            RenderWindow app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
-            currentEffect = new CircleEffect(255,255);
+            currentEffect = new ChessEffect();
 
             
 
-            Texture texture = new Texture(255, 255);
+            Texture texture = new Texture(WINDOW_WIDTH, WINDOW_HEIGHT);
             
 
 
@@ -40,7 +43,7 @@ namespace DemoEffects
 
                 currentEffect.DoEffect();
 
-                texture.Update(currentEffect.GetPixels());
+                texture.Update(currentEffect.GetCurrentFrame());
 
                 Sprite test = new Sprite(texture);
                 app.Draw(test);

@@ -1,31 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DemoEffects.Models;
-using SFML.Graphics;
 
 namespace DemoEffects.Effects
 {
-    class CircleEffect : IEffect
+    public class CircleEffect : BaseEffect, IEffect
     {
-        List<PixelPoint> pixels = new List<PixelPoint>();
-        int w = 0;
-        int h = 0;
+        int w = 255;
+        int h = 255;
         float sineThreshhold = 0.5f;
-
-        public CircleEffect(int w, int h)
-        {
-            pixels = new List<PixelPoint>();
-            this.w = w;
-            this.h = h;
-        }
-
-        public CircleEffect()
-        {
-            pixels = new List<PixelPoint>();
-        }
 
         public void DoEffect()
         {
@@ -34,27 +15,16 @@ namespace DemoEffects.Effects
                 for (int x = 0; x < w; x++)
                 {
                     int color = (int)(128.0 + (128.0 * Math.Sin(Math.Sqrt((x - w / 2.0) * (x - w / 2.0) + (y - h / 2.0) * (y - h / 2.0)) / sineThreshhold)));
-
-                    PixelPoint newPixel = new PixelPoint(x, y, color);
-                    pixels.Add(newPixel);
+                    currentFrame.SetPixel((uint)x, (uint)y, GetColor(color));
                 }
             }
             sineThreshhold += 0.5f;
-            if (sineThreshhold >= 8.0f)
+            if(sineThreshhold >= 8.0f)
             {
                 sineThreshhold = 0.5f;
             }
         }
 
-        public Image GetPixels()
-        {
-            Image resultImage = new Image(255, 255);
-            foreach (var pixel in pixels)
-            {
-                resultImage.SetPixel((uint)pixel.positionX, (uint)pixel.positionY, pixel.GetColor());
-            }
 
-            return resultImage;
-        }
     }
 }

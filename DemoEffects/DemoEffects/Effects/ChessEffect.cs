@@ -1,29 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using DemoEffects.Models;
 using SFML.Graphics;
 
 namespace DemoEffects.Effects
 {
-    public class ChessEffect : IEffect
+    public class ChessEffect : BaseEffect, IEffect
     {
-        List<PixelPoint> pixels = new List<PixelPoint>();
+        float sineThreshhold = 0.5f;
 
-
-        int w = 0;
-        int h = 0;
-
-        public ChessEffect(int w, int h)
-        {
-            this.w = w;
-            this.h = h;
-            pixels = new List<PixelPoint>();
-        }
-
-        public ChessEffect()
-        {
-            pixels = new List<PixelPoint>();
-        }
+        int w = 255;
+        int h = 255;
 
 
         public void DoEffect()
@@ -32,22 +18,16 @@ namespace DemoEffects.Effects
             {
                 for (int x = 0; x < w; x++)
                 {
-                    int color = (int)(128.0 + (128.0 * Math.Sin(x / 8.0)) + 128.0 + (128.0 * Math.Sin(y / 8.0))) / 2;
-                    PixelPoint newPixel = new PixelPoint(x, y, color);
-                    pixels.Add(newPixel);
+                    int color = (int)(128.0 + (128.0 * Math.Sin(x / sineThreshhold)) + 128.0 + (128.0 * Math.Sin(y / sineThreshhold))) / 2;
+                    currentFrame.SetPixel((uint)x, (uint)y, GetColor(color));
+                    
                 }
             }
-        }
-
-        public Image GetPixels()
-        {
-            Image resultImage = new Image(255, 255);
-            foreach (var pixel in pixels)
+            sineThreshhold += 0.5f;
+            if (sineThreshhold >= 8.0f)
             {
-                resultImage.SetPixel((uint)pixel.positionX, (uint)pixel.positionY, pixel.GetColor());
+                sineThreshhold = 0.5f;
             }
-
-            return resultImage;
         }
     }
 }

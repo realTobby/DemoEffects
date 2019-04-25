@@ -73,11 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Effects\BaseEffect.cs" />
     <Compile Include="Effects\ChessEffect.cs" />
     <Compile Include="Effects\LineEffect.cs" />
     <Compile Include="Effects\CircleEffect.cs" />
     <Compile Include="Interfaces\IEffect.cs" />
-    <Compile Include="Models\PixelPoint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -115,6 +115,9 @@
     <Content Include="extLibs\OpenTK.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

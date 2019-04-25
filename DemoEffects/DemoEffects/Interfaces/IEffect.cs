@@ -5,7 +5,7 @@ namespace DemoEffects
     interface IEffect
     {
         void DoEffect();
-        Image GetPixels();
+        Image GetCurrentFrame();
 
     }
 }
