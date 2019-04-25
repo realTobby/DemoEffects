@@ -43,7 +43,7 @@ namespace DemoEffects
                 app.Clear(Color.Red);
 
 
-                int someVal = 0;
+                int someVal = random.Next(0, 100);
                 if(someVal == 73)
                 {
                     Console.WriteLine(currentIndex);
@@ -61,6 +61,9 @@ namespace DemoEffects
                             break;
                         case 3:
                             currentEffect = new LineEffect(true);
+                            break;
+                        case 4:
+                            currentEffect = new PlasmaEffect();
                             currentIndex = -1;
                             break;
                     }
