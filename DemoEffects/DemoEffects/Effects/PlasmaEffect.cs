@@ -30,13 +30,12 @@ namespace DemoEffects.Effects
                     double r = Math.Floor(Math.Sin(v * Math.PI) * 256);
                     double b = Math.Floor(Math.Cos(v * Math.PI) * 256);
 
-                    var integerColor = Tools.RGBtoInt((int)r, (int)b, (int)b);
+                    var integerColor = Tools.RGBtoInt((int)r, 0, (int)b);
 
                     currentFrame.SetPixel((uint)x, (uint)y, GetColor(integerColor));
 
                 }
             }
-            //time += 0.02f;
         }
     }
 }
