@@ -7,23 +7,19 @@ namespace DemoEffects.Effects
     {
         bool isSloped = false;
         float sineThreshhold = 0f;
-
-        int w = 255;
-        int h = 255;
         bool isForward = true;
-        public LineEffect(bool sloped)
+
+        public LineEffect(bool sloped, int w, int h) : base(w, h)
         {
             isSloped = sloped;
         }
 
         public void DoEffect()
         {
-            int h = 255;
-            int w = 255;
 
-            for (int y = 0; y < h; y++)
+            for (int y = 0; y < base.EffectHeight; y++)
             {
-                for (int x = 0; x < w; x++)
+                for (int x = 0; x < base.EffectWidth; x++)
                 {
                     int color = 1;
                     if(isSloped == true)

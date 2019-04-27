@@ -9,11 +9,32 @@ namespace DemoEffects.Effects
 {
     public class BaseEffect
     {
-        public Image currentFrame = new Image(255, 255);
+        public int EffectWidth;
+        public int EffectHeight;
 
-        public Image GetCurrentFrame()
+        private int x;
+        private int y;
+
+        public Image currentFrame = new Image(0, 0);
+
+        public void InitEffect(int w, int h)
         {
-            return currentFrame;
+            EffectWidth = w;
+            EffectHeight = h;
+            currentFrame = new Image((uint)EffectWidth, (uint)EffectHeight);
+        }
+
+        public BaseEffect(int w, int h)
+        {
+            InitEffect(w, h);
+        }
+
+        public Sprite GetCurrentFrame()
+        {
+            Sprite resultFrame = new Sprite(new Texture(currentFrame));
+            resultFrame.Position = new SFML.System.Vector2f(x, y);
+
+            return resultFrame;
         }
 
         public Color GetColor(int color)
@@ -22,5 +43,12 @@ namespace DemoEffects.Effects
             if (!BitConverter.IsLittleEndian) Array.Reverse(values);
             return new Color(values[2], values[1], values[0]);
         }
+
+        public void SetPosition(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
     }
 }

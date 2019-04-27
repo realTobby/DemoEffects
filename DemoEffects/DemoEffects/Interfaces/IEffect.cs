@@ -5,7 +5,8 @@ namespace DemoEffects
     interface IEffect
     {
         void DoEffect();
-        Image GetCurrentFrame();
+        Sprite GetCurrentFrame();
+        void SetPosition(int x, int y);
 
     }
 }

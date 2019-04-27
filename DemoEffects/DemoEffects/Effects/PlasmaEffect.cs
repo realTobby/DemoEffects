@@ -5,20 +5,26 @@ namespace DemoEffects.Effects
 {
     public class PlasmaEffect : BaseEffect, IEffect
     {
-        int w = 255;
-        int h = 255;
+        Random random = new Random();
+
+        int effectIndex = 0;
+
+        public PlasmaEffect(int w, int h) : base(w, h)
+        {
+        }
 
         public void DoEffect()
         {
-            int time = DateTime.Now.Millisecond / 500;
+            Console.WriteLine(effectIndex);
+            int time = effectIndex / 500;
 
-            for(float y = 0; y < h; y++)
+            for(float y = 0; y < base.EffectHeight; y++)
             {
-                float dy = (y / h) - 0.5f;
+                float dy = (y / base.EffectHeight) - 0.5f;
 
-                for(float x = 0; x < w; x++)
+                for(float x = 0; x < base.EffectWidth; x++)
                 {
-                    float dx = (y / w) - 0.5f;
+                    float dx = (x / base.EffectWidth) - 0.5f;
                     double v = Math.Sin(dx * 10 + time);
                     double cx = dx + 0.5f * Math.Sin(time / 5);
                     double cy = dy + 0.5f * Math.Cos(time / 3);
@@ -28,12 +34,13 @@ namespace DemoEffects.Effects
                     double r = Math.Floor(Math.Sin(v * Math.PI) * 255);
                     double b = Math.Floor(Math.Cos(v * Math.PI) * 255);
 
-                    var integerColor = Tools.RGBtoInt((int)r, (int)b, (int)b);
+                    var integerColor = Tools.RGBtoInt((int)r, 0, (int)b);
 
                     currentFrame.SetPixel((uint)x, (uint)y, GetColor(integerColor));
 
                 }
             }
+            effectIndex+=16;
 
         }
     }

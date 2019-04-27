@@ -7,10 +7,14 @@ namespace DemoEffects
 {
     class Program
     {
-        static IEffect currentEffect = new LineEffect(false);
+        static IEffect effectTopLeft = new LineEffect(false, 10, 10);
+        static IEffect effectTopRight = new LineEffect(false, 10, 10);
+        static IEffect effectBottomLeft = new LineEffect(false, 10, 10);
+        static IEffect effectBottomRight = new LineEffect(false, 10, 10);
+
         static Random random = new Random();
-        static uint WINDOW_WIDTH = 255;
-        static uint WINDOW_HEIGHT = 255;
+        static uint WINDOW_WIDTH = 600;
+        static uint WINDOW_HEIGHT = 400;
 
         static void Main(string[] args)
         {
@@ -20,51 +24,47 @@ namespace DemoEffects
 
         public static void Init()
         {
-            int currentIndex = 0;
-
             RenderWindow app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
-            currentEffect = new LineEffect(true);
-            Texture effectTexture = new Texture(WINDOW_WIDTH, WINDOW_HEIGHT);
+            effectTopLeft = new ChessEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectTopLeft.SetPosition(0, 0);
+
+            effectTopRight = new CircleEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectTopRight.SetPosition((int)WINDOW_WIDTH / 2, 0);
+
+            effectBottomRight = new LineEffect(true, (int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectBottomRight.SetPosition((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+
+            effectBottomLeft = new PlasmaEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectBottomLeft.SetPosition(0, (int)WINDOW_HEIGHT / 2);
+
+            RectangleShape horLine = new RectangleShape(new SFML.System.Vector2f(WINDOW_WIDTH, 3));
+            horLine.Position = new SFML.System.Vector2f(0, (WINDOW_HEIGHT / 2) - 1);
+            horLine.FillColor = Color.Black;
+
+            RectangleShape verLine = new RectangleShape(new SFML.System.Vector2f(3, WINDOW_HEIGHT));
+            verLine.Position = new SFML.System.Vector2f((WINDOW_WIDTH/2)-1, 0);
+            verLine.FillColor = Color.Black;
 
             while (app.IsOpen)
             {
                 app.DispatchEvents();
                 app.Clear(Color.Red);
 
-                int someVal =  random.Next(0, 100);
-                if(someVal == 73)
-                {
-                    Console.WriteLine(currentIndex);
-                    currentIndex++;
-                    switch (currentIndex)
-                    {
-                        case 0:
-                            currentEffect = new CircleEffect();
-                            break;
-                        case 1:
-                            currentEffect = new ChessEffect();
-                            break;
-                        case 2:
-                            currentEffect = new LineEffect(false);
-                            break;
-                        case 3:
-                            currentEffect = new LineEffect(true);
-                            break;
-                        case 4:
-                            currentEffect = new PlasmaEffect();
-                            currentIndex = -1;
-                            break;
-                    }
-                }
-                someVal = 0;
-                currentEffect.DoEffect();
+                effectTopLeft.DoEffect();
+                effectTopRight.DoEffect();
+                effectBottomLeft.DoEffect();
+                effectBottomRight.DoEffect();
 
-                effectTexture.Update(currentEffect.GetCurrentFrame());
+                app.Draw(effectTopLeft.GetCurrentFrame());
+                app.Draw(effectTopRight.GetCurrentFrame());
+                app.Draw(effectBottomLeft.GetCurrentFrame());
+                app.Draw(effectBottomRight.GetCurrentFrame());
 
-                Sprite effectScreen = new Sprite(effectTexture);
-                app.Draw(effectScreen);
+                app.Draw(horLine);
+                app.Draw(verLine);
+
 
                 // Update the window
                 app.Display();
