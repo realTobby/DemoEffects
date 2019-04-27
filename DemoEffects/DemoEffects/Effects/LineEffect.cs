@@ -6,8 +6,9 @@ namespace DemoEffects.Effects
     public class LineEffect : BaseEffect, IEffect
     {
         bool isSloped = false;
-        float sineThreshhold = 0f;
-        bool isForward = true;
+
+        float effectTime = 0;
+
 
         public LineEffect(bool sloped, int w, int h) : base(w, h)
         {
@@ -16,7 +17,7 @@ namespace DemoEffects.Effects
 
         public void DoEffect()
         {
-
+            effectTime = Program.GetTime() / 5;
             for (int y = 0; y < base.EffectHeight; y++)
             {
                 for (int x = 0; x < base.EffectWidth; x++)
@@ -24,35 +25,16 @@ namespace DemoEffects.Effects
                     int color = 1;
                     if(isSloped == true)
                     {
-                        color = (int)(128.0 + (128.0 * Math.Sin((x+y) / sineThreshhold)));
+                        color = (int)(128.0 + (128.0 * Math.Sin((x+y) / effectTime)));
                     }
                     else
                     {
-                        color = (int)(128.0 + (128.0 * Math.Sin(x / sineThreshhold)));
+                        color = (int)(128.0 + (128.0 * Math.Sin(x / effectTime)));
                     }
 
                     currentFrame.SetPixel((uint)x, (uint)y, GetColor(color));
                 }
             }
-
-            if (isForward == true)
-            {
-                sineThreshhold += 0.05f;
-            }
-            else
-            {
-                sineThreshhold -= 0.05f;
-            }
-
-            if (sineThreshhold >= 16.0f)
-            {
-                isForward = false;
-            }
-            if (sineThreshhold <= -16.0f)
-            {
-                isForward = true;
-            }
-
         }
     }
 }
