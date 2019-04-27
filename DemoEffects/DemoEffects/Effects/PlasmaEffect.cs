@@ -6,17 +6,14 @@ namespace DemoEffects.Effects
     public class PlasmaEffect : BaseEffect, IEffect
     {
         Random random = new Random();
-
+        float time = 0;
         public PlasmaEffect(int w, int h) : base(w, h)
         {
         }
 
         public void DoEffect()
         {
-            int t = Convert.ToInt32(12 * Math.PI) * DateTime.Now.Second / 10;
-
-            int time = t;
-
+            time = Program.GetTime();
             for(float y = 0; y < base.EffectHeight; y++)
             {
                 float dy = (y / base.EffectHeight) - 0.5f;
@@ -30,8 +27,8 @@ namespace DemoEffects.Effects
 
                     v += Math.Sin(Math.Sqrt(50 * (cx * cx + cy * cy) + 1 + time));
                     v += Math.Cos(Math.Sqrt(dx * dx + dy * dy) - time);
-                    double r = Math.Floor(Math.Sin(v * Math.PI) * 255);
-                    double b = Math.Floor(Math.Cos(v * Math.PI) * 255);
+                    double r = Math.Floor(Math.Sin(v * Math.PI) * 256);
+                    double b = Math.Floor(Math.Cos(v * Math.PI) * 256);
 
                     var integerColor = Tools.RGBtoInt((int)r, (int)b, (int)b);
 
@@ -39,6 +36,7 @@ namespace DemoEffects.Effects
 
                 }
             }
+            //time += 0.02f;
         }
     }
 }

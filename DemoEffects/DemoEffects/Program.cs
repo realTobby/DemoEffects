@@ -1,5 +1,6 @@
 ﻿using DemoEffects.Effects;
 using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 using System;
 
@@ -14,14 +15,21 @@ namespace DemoEffects
 
         public static RenderWindow app;
 
+        public static Clock clock = new Clock();
+
         static Random random = new Random();
-        static uint WINDOW_WIDTH = 600;
-        static uint WINDOW_HEIGHT = 400;
+        static uint WINDOW_WIDTH = 800;
+        static uint WINDOW_HEIGHT = 600;
 
         static void Main(string[] args)
         {
             Init();
 
+        }
+
+        public static float GetTime()
+        {
+            return clock.ElapsedTime.AsSeconds();
         }
         
         public static void Init()
@@ -32,13 +40,13 @@ namespace DemoEffects
             effectTopLeft = new ChessEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
             effectTopLeft.SetPosition(0, 0);
 
-            effectTopRight = new CircleEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectTopRight = new CircleEffect((int)WINDOW_WIDTH / 2 + 1, (int)WINDOW_HEIGHT / 2);
             effectTopRight.SetPosition((int)WINDOW_WIDTH / 2, 0);
 
-            effectBottomRight = new LineEffect(true, (int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectBottomRight = new LineEffect(true, (int)WINDOW_WIDTH / 2 + 1, (int)WINDOW_HEIGHT / 2 + 1);
             effectBottomRight.SetPosition((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
 
-            effectBottomLeft = new PlasmaEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectBottomLeft = new PlasmaEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2+1 );
             effectBottomLeft.SetPosition(0, (int)WINDOW_HEIGHT / 2);
 
             RectangleShape horLine = new RectangleShape(new SFML.System.Vector2f(WINDOW_WIDTH, 3));
