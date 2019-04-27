@@ -7,16 +7,15 @@ namespace DemoEffects.Effects
     {
         Random random = new Random();
 
-        int effectIndex = 0;
-
         public PlasmaEffect(int w, int h) : base(w, h)
         {
         }
 
         public void DoEffect()
         {
-            Console.WriteLine(effectIndex);
-            int time = effectIndex / 500;
+            int t = Convert.ToInt32(DateTime.Now.Second * Math.PI);
+
+            int time = t;
 
             for(float y = 0; y < base.EffectHeight; y++)
             {
@@ -34,14 +33,12 @@ namespace DemoEffects.Effects
                     double r = Math.Floor(Math.Sin(v * Math.PI) * 255);
                     double b = Math.Floor(Math.Cos(v * Math.PI) * 255);
 
-                    var integerColor = Tools.RGBtoInt((int)r, 0, (int)b);
+                    var integerColor = Tools.RGBtoInt((int)r, (int)b, (int)b);
 
                     currentFrame.SetPixel((uint)x, (uint)y, GetColor(integerColor));
 
                 }
             }
-            effectIndex+=16;
-
         }
     }
 }

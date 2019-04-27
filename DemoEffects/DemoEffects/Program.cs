@@ -12,6 +12,8 @@ namespace DemoEffects
         static IEffect effectBottomLeft = new LineEffect(false, 10, 10);
         static IEffect effectBottomRight = new LineEffect(false, 10, 10);
 
+        public static RenderWindow app;
+
         static Random random = new Random();
         static uint WINDOW_WIDTH = 600;
         static uint WINDOW_HEIGHT = 400;
@@ -21,10 +23,10 @@ namespace DemoEffects
             Init();
 
         }
-
+        
         public static void Init()
         {
-            RenderWindow app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
+            app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
             effectTopLeft = new ChessEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
