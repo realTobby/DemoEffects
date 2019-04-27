@@ -13,7 +13,7 @@ namespace DemoEffects.Effects
 
         public void DoEffect()
         {
-            int t = Convert.ToInt32(DateTime.Now.Second * Math.PI);
+            int t = Convert.ToInt32(12 * Math.PI) * DateTime.Now.Second / 10;
 
             int time = t;
 
