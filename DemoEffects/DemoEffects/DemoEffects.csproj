@@ -78,6 +78,7 @@
     <Compile Include="Effects\ChessEffect.cs" />
     <Compile Include="Effects\LineEffect.cs" />
     <Compile Include="Effects\CircleEffect.cs" />
+    <Compile Include="Effects\Metablob.cs" />
     <Compile Include="Effects\PlasmaEffect.cs" />
     <Compile Include="Interfaces\IEffect.cs" />
     <Compile Include="Program.cs" />

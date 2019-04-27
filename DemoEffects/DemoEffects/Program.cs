@@ -38,7 +38,7 @@ namespace DemoEffects
             app = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Demo Effects");
             app.Closed += new EventHandler(OnClose);
 
-            effectTopLeft = new ChessEffect((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
+            effectTopLeft = new Metablob((int)WINDOW_WIDTH / 2, (int)WINDOW_HEIGHT / 2);
             effectTopLeft.SetPosition(0, 0);
 
             effectTopRight = new CircleEffect((int)WINDOW_WIDTH / 2 + 1, (int)WINDOW_HEIGHT / 2);
